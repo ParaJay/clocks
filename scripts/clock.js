@@ -30,11 +30,8 @@ export class StandardClock extends Clock {
 		this.canvas = document.getElementById("canvas");
 		this.context = this.canvas.getContext("2d");
 
-		let w = this.canvas.width;
-		let h = this.canvas.height;
-
-		this.#x = w / 2;
-		this.#y = h / 2;
+		this.#x = this.canvas.width / 2;
+		this.#y = this.canvas.height / 2;
 
 		this.#radius = ((this.#x * 0.75) + (this.#y * 0.75)) / 2;
 
@@ -53,19 +50,13 @@ export class StandardClock extends Clock {
 		this.render();
 	}
 
-	updateTime() {
-		let date = new Date();
-
-		this.hours = date.getHours();
-		this.minutes = date.getMinutes();
-		this.seconds = date.getSeconds();
-	}
-
 	clear() {
 		this.context.beginPath();
 		this.context.fillStyle = "white";
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-		this.context.arc(this.#x, this.#y, this.#radius, Math.PI * 2, null);
+		this.context.arc(this.#x, this.#y, this.#radius, Math.PI * 2, null); //paint over the clock with white
+		this.context.fill();
+
+		this.context.arc(this.#x, this.#y, this.#radius, Math.PI * 2, null); //repaint the clock
 		this.context.stroke();
 	}
 
@@ -76,21 +67,7 @@ export class StandardClock extends Clock {
 		this.#drawMinutes();
 		this.#drawHours();
 		this.#drawNumbers();
-
-		for(let i = 1; i < 61; i++) {
-			let rot = this.#getRotation(i, 60);
-
-			let x = this.#getX(rot, 0.95);
-			let y = this.#getY(rot, 0.95);
-
-			let x2 = this.#getX(rot);
-			let y2 = this.#getY(rot);
-
-			this.context.beginPath();
-			this.context.moveTo(this.#x + x, this.#y - y);
-			this.context.lineTo(this.#x + x2, this.#y - y2);
-			this.context.stroke();
-		}
+		this.#drawSecondNotation();
 
 		console.log(this.hours + ":" + this.minutes + ":" + this.seconds);
 		this.ms = new Date().getMilliseconds();
@@ -143,6 +120,23 @@ export class StandardClock extends Clock {
 			
 			let metrics = this.context.measureText(i.toString());
 			this.context.fillText(i.toString(), this.#x + x - (metrics.width / 2), (this.#y - y) + (rot));
+			this.context.stroke();
+		}
+	}
+
+	#drawSecondNotation() {
+		for(let i = 1; i < 61; i++) {
+			let rot = this.#getRotation(i, 60);
+
+			let x = this.#getX(rot, 0.95);
+			let y = this.#getY(rot, 0.95);
+
+			let x2 = this.#getX(rot);
+			let y2 = this.#getY(rot);
+
+			this.context.beginPath();
+			this.context.moveTo(this.#x + x, this.#y - y);
+			this.context.lineTo(this.#x + x2, this.#y - y2);
 			this.context.stroke();
 		}
 	}
