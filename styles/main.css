@@ -1,0 +1,32 @@
+@font-face {
+	font-family: "digital";
+	src: url("./digital.ttf");
+}
+
+h2, p {
+	min-width: 70vi;
+	font-size: 7vi;
+	font-family: "digital";
+}
+
+button {
+	border-radius: 10%;
+	border: none;
+	background-color: gainsboro;
+
+	box-shadow: 
+	6px 2px 10px silver,
+	6px 8px 12px black,
+
+	0px 12px 14px silver inset, 
+	0px -12px 14px silver inset, 
+
+	32px 0px 14px gray inset, 
+	-32px 0px 14px gray inset;
+}
+
+.holder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Clock</title>
+		<link rel="stylesheet" href="./styles/main.css">
+	</head>
+
+	<body>
+		<div class="holder">
+			<p id="pad"></p>
+			
+			<button id="timeBtn"><h2 id="time"></h2></button>
+			
+			<canvas id="canvas" width=600, height=500></canvas>
+
+			<br><br>
+
+			<a href="?type=standard" id="switch">Switch</a>
+		</div>
+		
+		<script id="clockScript" type="module">
+			import{DigitalClock, StandardClock, Clock, start} from "./scripts/clock.js";
+
+			let query = window.location.search;
+			let clock = new DigitalClock();
+
+			if(query) {
+				let params = new URLSearchParams(query);
+				let type = params.get("type");
+
+				if(type === "standard") {
+					clock = new StandardClock();
+
+					document.getElementById("switch").href = window.location.search.split("?")[0] + "?type=digital";
+				}
+			}
+
+			start(clock);
+
+			function switchType() {
+				let query = window.location.search;
+
+				if(!query) {
+					window.location.search = window.location.search
+				}
+			}
+		</script>
+	</body>
+</html>
