@@ -20,7 +20,6 @@ export class Clock {
 	init(){}
 }
 
-//TODO: render hours and mins between points a and b
 export class StandardClock extends Clock {
 	#x; #y; #radius;
 
@@ -73,29 +72,17 @@ export class StandardClock extends Clock {
 		this.ms = new Date().getMilliseconds();
 	}
 
-	#getX(rot, mult = 1) {
-		return (this.#radius * mult) * Math.sin(rot);
-	}
+	#getX(rot, mult = 1) { return (this.#radius * mult) * Math.sin(rot); }
 
-	#getY(rot, mult = 1) {
-		return (this.#radius * mult) * Math.cos(rot);
-	}
+	#getY(rot, mult = 1) { return (this.#radius * mult) * Math.cos(rot); }
 
-	#getRotation(value, div) {
-		return (Math.PI * 2) * (value / div);
-	}
+	#getRotation(value, div) { return (Math.PI * 2) * (value / div); }
 
-	#drawSeconds() {
-		this.#drawLine(this.seconds, 60, 0.93);
-	}
+	#drawSeconds() { this.#drawLine(this.seconds, 60, 0.93); }
 
-	#drawMinutes() {
-		this.#drawLine(this.minutes, 60, 0.8, this.seconds);
-	}
+	#drawMinutes() { this.#drawLine(this.minutes, 60, 0.8, this.seconds); }
 
-	#drawHours() {
-		this.#drawLine(this.hours, 12, 0.6, this.minutes);
-	}
+	#drawHours() { this.#drawLine(this.hours, 12, 0.6, this.minutes); }
 	
 	#drawLine(value, div, off=1, next=0) {
 		let rot = this.#getRotation(value + ((next / 60)), div);
