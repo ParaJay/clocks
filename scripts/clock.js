@@ -90,15 +90,16 @@ export class StandardClock extends Clock {
 	}
 
 	#drawMinutes() {
-		this.#drawLine(this.minutes, 60, 0.8);
+		this.#drawLine(this.minutes, 60, 0.8, this.seconds);
 	}
 
 	#drawHours() {
-		this.#drawLine(this.hours, 12, 0.6);
+		this.#drawLine(this.hours, 12, 0.6, this.minutes);
 	}
 	
-	#drawLine(value, div, off=1) {
-		let rot = this.#getRotation(value, div);
+	#drawLine(value, div, off=1, next=0) {
+		let rot = this.#getRotation(value + ((next / 60)), div);
+
 		let x = this.#getX(rot, off);
 		let y = this.#getY(rot, off);
 
